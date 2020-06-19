@@ -1,10 +1,9 @@
 const diceRoller = (numOfDice, numOfSides, modifier) => {
     let inputCheck = true;
-    if (!Number.isInteger(numOfSides) || numOfSides <= 3) {inputCheck = false;}
     if (!Number.isInteger(numOfDice)  || numOfDice <= 0 ) {inputCheck = false;}
+    if (!Number.isInteger(numOfSides) || numOfSides <= 0) {inputCheck = false;}
     if (!Number.isInteger(modifier)) {inputCheck = false;}
     if (!inputCheck) {return rejectObject}
-
     let results = [];
     
     for(let i = 0; i < numOfDice; i+= 1)

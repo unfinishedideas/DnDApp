@@ -14,10 +14,21 @@ const DiceMachine = (props) => {
     const [numOfSides, setNumOfSides] = useState(props.numOfSides)
     const [modifier, setModifier] = useState(props.modifier)
 
-
     const rollDice = (numDice, numSides, mod) => {
         const resultObj = diceRoller(numDice, numSides, mod);
         setResultsBack(resultObj);
+    }
+
+    const setValue = (value, type) => {
+        let val = parseInt(value);
+        if (!Number.isInteger(val)) {
+            val = '';
+        }
+
+        if (type === 'numOfDice') {setNumOfDice(val)}
+        else if (type === 'numOfSides') { setNumOfSides(val)}
+        else if (type === 'modifier') {setModifier(val)}
+        else {console.log('set value failure'); return 0}
     }
 
     return(
@@ -29,14 +40,7 @@ const DiceMachine = (props) => {
                     style={[{textAlign: 'right'}, styles.numInput]}                    
                     keyboardType={'numeric'}
                     placeholder={'2'}
-                    onChangeText={(text) => 
-                        {
-                            if(text){
-                                setNumOfDice(parseInt(text))
-                            } else {
-                                setNumOfDice(0)
-                            }
-                        }}
+                    onChangeText={(text) => {setValue(text, 'numOfDice')}}
                     value={String(numOfDice)}
                 />
                 
@@ -46,14 +50,7 @@ const DiceMachine = (props) => {
                     style={styles.numInput}
                     keyboardType={'numeric'}
                     placeholder={'4'}
-                    onChangeText={(text) => 
-                        {
-                            if(text){
-                                setNumOfSides(parseInt(text))
-                            } else {
-                                setNumOfSides(0)
-                            }
-                        }}
+                    onChangeText={(text) =>{setValue(text, 'numOfSides')}}
                     value={String(numOfSides)}
                 />
             </View>
@@ -65,13 +62,7 @@ const DiceMachine = (props) => {
                     style={styles.numInput} 
                     keyboardType={'numeric'}
                     placeholder={'3'}
-                    onChangeText={(text) => {
-                        if(text){
-                            setModifier(parseInt(text))
-                        } else {
-                            setModifier(0)
-                        }
-                    }}
+                    onChangeText={(text) => {setValue(text, 'modifier')}}
                     value={String(modifier)}
                 />
             </View>
