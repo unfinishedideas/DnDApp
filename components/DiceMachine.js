@@ -10,40 +10,77 @@ import DiceResultDisplay from './DiceResultDisplay';
 const DiceMachine = () => {
 
     const [resultsBack, setResultsBack] = useState({total: '', results: [], string: 'waiting for input'})
-    const [numOfDice, setNumOfDice] = useState(null)
-    const [numOfSides, setNumOfSides] = useState(null)
+    const [numOfDice, setNumOfDice] = useState(2)
+    const [numOfSides, setNumOfSides] = useState(4)
+    const [modifier, setModifier] = useState(0)
 
 
-    const rollDice = (numDice, numSides, modifiers) => {
-        const resultObj = diceRoller(numDice, numSides, modifiers);
+    const rollDice = (numDice, numSides, mod) => {
+        const resultObj = diceRoller(numDice, numSides, mod);
         setResultsBack(resultObj);
     }
-
-    const getNumOfDice = (num) => {setNumOfDice(num)}
-    const getNumOfSides = (num) => {setNumOfSides(num)}
 
     return(
         <View>
             <Text>DICE MACHINE</Text>
             
             <View style={styles.inputBox}>
-                <TextInput style={[{textAlign: 'right'}, styles.numInput]}                    
-                    onChangeText={(text) => setNumOfDice(parseInt(text))}
-                    value={numOfDice}
-                />
-                    <Text style={{textAlignVertical: 'bottom'}}> d </Text>
                 <TextInput 
+                    style={[{textAlign: 'right'}, styles.numInput]}                    
+                    keyboardType={'numeric'}
+                    placeholder={'2'}
+                    onChangeText={(text) => 
+                        {
+                            if(text){
+                                setNumOfDice(parseInt(text))
+                            } else {
+                                setNumOfDice(0)
+                            }
+                        }}
+                    value={String(numOfDice)}
+                />
+                
+                <Text style={{textAlignVertical: 'bottom'}}> d </Text>
+                
+                <TextInput 
+                    style={styles.numInput}
+                    keyboardType={'numeric'}
+                    placeholder={'4'}
+                    onChangeText={(text) => 
+                        {
+                            if(text){
+                                setNumOfSides(parseInt(text))
+                            } else {
+                                setNumOfSides(0)
+                            }
+                        }}
+                    value={String(numOfSides)}
+                />
+            </View>
+           
+            <Text>Modifier</Text>
+           
+            <View style={styles.inputBox}>
+                <TextInput
                     style={styles.numInput} 
-                    onChangeText={(text) => setNumOfSides(parseInt(text))}
-                    value={numOfSides}
+                    keyboardType={'numeric'}
+                    placeholder={'3'}
+                    onChangeText={(text) => {
+                        if(text){
+                            setModifier(parseInt(text))
+                        } else {
+                            setModifier(0)
+                        }
+                    }}
+                    value={String(modifier)}
                 />
             </View>
 
-            <TouchableOpacity style={styles.rollButton} onPress={() => {rollDice(numOfDice,numOfSides,0)}}>
+            <TouchableOpacity style={styles.rollButton} onPress={() => {rollDice(numOfDice,numOfSides,modifier)}}>
                 <Text>Roll</Text>
             </TouchableOpacity>
 
-            <DiceResultDisplay resultsBack={resultsBack}/>
+            <DiceResultDisplay input={resultsBack}/>
         </View>
     )
 }
