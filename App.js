@@ -15,7 +15,7 @@ const instructions = Platform.select({
 export default function App() {
   return (
     <View style={styles.container}>
-      <DiceMachine/>
+      <DiceMachine numOfDice={2} numOfSides={4} modifier={2}/>
     </View>
   );
 }

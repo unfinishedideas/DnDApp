@@ -8,16 +8,17 @@ const diceRoller = (numOfDice, numOfSides, modifier) => {
     let results = [];
     
     for(let i = 0; i < numOfDice; i+= 1)
-    {
-        const min = 1;
-        const max = numOfSides;
-        let roll = Math.floor(Math.random() * (max - min + 1) + min);
-        results.push(roll);
-    }
+        {
+            const min = 1;
+            const max = numOfSides;
+            let roll = Math.floor(Math.random() * (max - min + 1) + min);
+            results.push(roll);
+        }
 
     let total = results.reduce((total, result) => total + result);
     total += modifier;
 
+    // Not very DRY. -P
     if (modifier && modifier > 0) {
         return {string: `${numOfDice}d${numOfSides} + ${Math.abs(modifier)}`, results: results, total: total};
     } else if (modifier && modifier < 0) {

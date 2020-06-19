@@ -7,12 +7,12 @@ import diceRoller from '../functions/diceRoller';
 // components
 import DiceResultDisplay from './DiceResultDisplay';
 
-const DiceMachine = () => {
+const DiceMachine = (props) => {
 
     const [resultsBack, setResultsBack] = useState({total: '', results: [], string: 'waiting for input'})
-    const [numOfDice, setNumOfDice] = useState(2)
-    const [numOfSides, setNumOfSides] = useState(4)
-    const [modifier, setModifier] = useState(0)
+    const [numOfDice, setNumOfDice] = useState(props.numOfDice)
+    const [numOfSides, setNumOfSides] = useState(props.numOfSides)
+    const [modifier, setModifier] = useState(props.modifier)
 
 
     const rollDice = (numDice, numSides, mod) => {
@@ -21,8 +21,8 @@ const DiceMachine = () => {
     }
 
     return(
-        <View>
-            <Text>DICE MACHINE</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>DICE MACHINE</Text>
             
             <View style={styles.inputBox}>
                 <TextInput 
@@ -58,7 +58,7 @@ const DiceMachine = () => {
                 />
             </View>
            
-            <Text>Modifier</Text>
+            <Text style={styles.heading}>Modifier</Text>
            
             <View style={styles.inputBox}>
                 <TextInput
@@ -76,11 +76,12 @@ const DiceMachine = () => {
                 />
             </View>
 
+            <Text style={styles.heading}>Results</Text>
+            <DiceResultDisplay input={resultsBack}/>
+
             <TouchableOpacity style={styles.rollButton} onPress={() => {rollDice(numOfDice,numOfSides,modifier)}}>
                 <Text>Roll</Text>
             </TouchableOpacity>
-
-            <DiceResultDisplay input={resultsBack}/>
         </View>
     )
 }
@@ -88,6 +89,23 @@ const DiceMachine = () => {
 export default DiceMachine;
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgb(100,100,100)',
+        padding: 50,
+        borderRadius: 40
+    },
+    title: {
+        color: 'white',
+        alignSelf: 'center',
+        fontSize: 30,
+        fontWeight: 'bold'
+    }, 
+    heading: {
+        color: 'white',
+        alignSelf: 'center',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
     inputBox: {
         flexDirection:'row', 
         flexWrap:'wrap',
@@ -95,13 +113,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(200,200,200)',
         fontSize: 20,
         padding: 20,
+        margin: 10,
         textAlignVertical: 'bottom'
     },
     numInput: {
-        textAlignVertical: 'bottom'    
+        textAlignVertical: 'bottom',
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        borderStyle: 'solid',
+        textAlign: 'center'
     },
     rollButton: {
         alignSelf: 'center',
-        marginTop: 20
+        marginTop: 20,
+        borderColor: 'rgb(20,20,20)',
+        borderWidth: 10,
+        padding: 15,
+        borderStyle: 'solid',
+        backgroundColor: 'rgb(200,200,200)',
     }
 })
